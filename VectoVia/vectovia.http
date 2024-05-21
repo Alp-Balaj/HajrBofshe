@@ -1,0 +1,6 @@
+@vectovia_HostAddress = http://localhost:5108
+
+GET {{vectovia_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
