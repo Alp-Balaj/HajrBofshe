@@ -1,6 +1,6 @@
 ﻿
 
-using vectovia.Models.KompaniaTaksive.Model;
+using VectoVia.Models.KompaniaTaksive.Model;
 
 public class Qyteti
 {
