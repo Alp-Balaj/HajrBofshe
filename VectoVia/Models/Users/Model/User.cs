@@ -1,4 +1,5 @@
-﻿using System.Data.SqlTypes;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.SqlTypes;
 
 namespace VectoVia.Models.Users.Model
 {
@@ -16,7 +17,10 @@ namespace VectoVia.Models.Users.Model
 
         public string Password { get; set; }
 
-        public int Role { get; set; }
+        public int RoleID { get; set; }
+
+        [ForeignKey("RoleID")]
+        public Role Role { get; set; } // Navigation property
 
     }
 }

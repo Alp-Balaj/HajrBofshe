@@ -1,7 +1,4 @@
-﻿using System.Data;
-using System.Diagnostics.Eventing.Reader;
-using VectoVia.Models.Users;
-using VectoVia.Models.Users.Model;
+﻿using VectoVia.Models.Users.Model;
 using VectoVia.Views;
 
 namespace VectoVia.Models.Users.Services
@@ -23,7 +20,7 @@ namespace VectoVia.Models.Users.Services
                 Username = user.Username,
                 Email = user.Email,
                 Password = user.Password,
-                Role = user.Role,
+                RoleID = user.RoleID,
             };
             _context.Users.Add(_user);
             _context.SaveChanges();
@@ -49,7 +46,7 @@ namespace VectoVia.Models.Users.Services
                 _user.Username = user.Username;
                 _user.Email = user.Email;
                 _user.Password = user.Password;
-                _user.Role = user.Role;
+                _user.RoleID = user.RoleID;
 
                 _context.SaveChanges();
             }
