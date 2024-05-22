@@ -10,8 +10,8 @@ using VectoVia.Models.KompaniaRents.Services;
 using vectovia.Models.PickUpLocations.Services;
 using vectovia.Models.PickUpLocations;
 using VectoVia.Data;
-using vectovia.Models.KompaniaTaksive;
-using vectovia.Models.KompaniaTaksive.Services;
+using VectoVia.Models.KompaniaTaksive;
+using VectoVia.Models.KompaniaTaksive.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,25 +19,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("LorikLaptopString") //Ndrro emrin e stringut qitu per me connect to your database
+    builder.Configuration.GetConnectionString("AlpLaptopString") //Ndrro emrin e stringut qitu per me connect to your database
 ));
 
-
-
 builder.Services.AddDbContext<CarsDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("LorikLaptopString")
+    builder.Configuration.GetConnectionString("AlpLaptopString")
 ));
 
 builder.Services.AddDbContext<KompaniaTaxiDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("LorikLaptopString")
+    builder.Configuration.GetConnectionString("AlpLaptopString")
 ));
 
 builder.Services.AddDbContext<TaxiCarsDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("LorikLaptopString")
+    builder.Configuration.GetConnectionString("AlpLaptopString")
 ));
 
 builder.Services.AddDbContext<KompaniaRentDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("LorikLaptopString")
+    builder.Configuration.GetConnectionString("AlpLaptopString")
 ));
 
 
@@ -48,6 +46,7 @@ builder.Services.AddTransient<CarServices>();
 builder.Services.AddTransient<TaxiCarServices>();
 builder.Services.AddTransient<KompaniaRentServices>();
 builder.Services.AddTransient<KompaniaTaxiServices>();
+builder.Services.AddTransient<QytetServices>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

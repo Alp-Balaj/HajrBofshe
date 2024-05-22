@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using vectovia.Models.KompaniaTaksive.Model;
+using VectoVia.Models.KompaniaTaksive.Model;
 using VectoVia.Migrations;
 
 public class KompaniaTaxiDbContext : DbContext

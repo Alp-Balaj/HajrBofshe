@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace vectovia.Models.KompaniaTaksive.Model
+namespace VectoVia.Models.KompaniaTaksive.Model
 {
     public class KompaniaTaxi
     {
@@ -16,8 +16,6 @@ namespace vectovia.Models.KompaniaTaksive.Model
         public string ContactInfo { get; set; }
 
         public string Sigurimi { get; set; }
-
-        public string Qyteti { get; set; }
 
         public int QytetiId { get; set; }
 
