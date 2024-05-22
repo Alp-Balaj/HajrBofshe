@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using vectovia.Models.PickUpLocations.Model;
 
 namespace VectoVia.Models.KompaniaRents.Model
 {
@@ -18,5 +19,11 @@ namespace VectoVia.Models.KompaniaRents.Model
 
         public string Sigurimi { get; set; }
 
+        public ICollection<PickUpLocation> PickUpLocations
+        {
+            get; set;
+
+        }
     }
 }
+

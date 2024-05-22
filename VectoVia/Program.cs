@@ -1,7 +1,5 @@
 using VectoVia.Models.Cars.Services;
 using VectoVia.Models.KompaniaRents;
-using VectoVia.Models.KompaniaTaxi.Services;
-using VectoVia.Models.KompaniaTaxi;
 using VectoVia.Models.TaxiCars.Services;
 using VectoVia.Models.TaxiCars;
 using VectoVia.Models.Users.Services;
@@ -9,6 +7,11 @@ using VectoVia.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using VectoVia.Models.Cars.NewFolder;
 using VectoVia.Models.KompaniaRents.Services;
+using vectovia.Models.PickUpLocations.Services;
+using vectovia.Models.PickUpLocations;
+using VectoVia.Data;
+using vectovia.Models.KompaniaTaksive;
+using vectovia.Models.KompaniaTaksive.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,35 +19,35 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("AlpPCString") //Ndrro emrin e stringut qitu per me connect to your database
+    builder.Configuration.GetConnectionString("LorikLaptopString") //Ndrro emrin e stringut qitu per me connect to your database
 ));
 
-builder.Services.AddDbContext<KompaniaTaxisDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("AlpPCString")
-));
+
 
 builder.Services.AddDbContext<CarsDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("AlpPCString")
+    builder.Configuration.GetConnectionString("LorikLaptopString")
+));
+
+builder.Services.AddDbContext<KompaniaTaxiDbContext>(options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("LorikLaptopString")
 ));
 
 builder.Services.AddDbContext<TaxiCarsDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("AlpPCString")
+    builder.Configuration.GetConnectionString("LorikLaptopString")
 ));
 
 builder.Services.AddDbContext<KompaniaRentDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("AlpPCString")
+    builder.Configuration.GetConnectionString("LorikLaptopString")
 ));
 
-builder.Services.AddDbContext<QytetiDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("AlpPCString")
-));
+
 
 builder.Services.AddTransient<UserServices>();
-builder.Services.AddTransient<KompaniaTaxiServices>();
-builder.Services.AddTransient<QytetiServices>();
+builder.Services.AddTransient<PickUpLocationServices>();
 builder.Services.AddTransient<CarServices>();
 builder.Services.AddTransient<TaxiCarServices>();
 builder.Services.AddTransient<KompaniaRentServices>();
+builder.Services.AddTransient<KompaniaTaxiServices>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

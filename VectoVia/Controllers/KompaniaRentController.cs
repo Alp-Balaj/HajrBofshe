@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using VectoVia.Models.KompaniaRents.Services;
-using VectoVia.Models.KompaniaTaxi.Services;
+//using VectoVia.Models.KompaniaTaxi.Services;
 using VectoVia.Models.Users.Services;
 using VectoVia.Views;
 

@@ -1,4 +1,5 @@
-﻿using VectoVia.Models.KompaniaRents;
+﻿using VectoVia.Data;
+using VectoVia.Models.KompaniaRents;
 using VectoVia.Models.KompaniaRents.Model;
 using VectoVia.Views;
 

@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using VectoVia.Data;
+using vectovia.Models.PickUpLocations;
 
 #nullable disable
 
-namespace VectoVia.Migrations
+namespace vectovia.Migrations
 {
-    [DbContext(typeof(KompaniaRentDbContext))]
-    partial class KompaniaRentDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(PickUpLocationDbContextModelSnapshot))]
+    partial class PickUpLocationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -51,7 +51,7 @@ namespace VectoVia.Migrations
 
                     b.HasKey("CompanyID");
 
-                    b.ToTable("KompaniaRents");
+                    b.ToTable("KompaniaRent");
                 });
 
             modelBuilder.Entity("vectovia.Models.PickUpLocations.Model.PickUpLocation", b =>
