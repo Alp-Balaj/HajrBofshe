@@ -14,7 +14,7 @@ namespace VectoVia.Views
 
         public string Password { get; set; }
 
-        public int Role { get; set; }
+        public int RoleID { get; set; }
 
     }
 }

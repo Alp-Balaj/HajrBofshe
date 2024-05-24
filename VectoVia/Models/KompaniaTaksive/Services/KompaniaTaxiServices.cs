@@ -21,7 +21,7 @@ namespace VectoVia.Models.KompaniaTaksive.Services
                 Location = kompaniaTaxi.Location,
                 ContactInfo = kompaniaTaxi.ContactInfo,
                 Sigurimi = kompaniaTaxi.Sigurimi,
-                QytetiId = kompaniaTaxi.QytetiId,
+                QytetiId = kompaniaTaxi.QytetiId, 
             };
             _context.KompaniaTaksive.Add(hello);
             _context.SaveChanges();          
