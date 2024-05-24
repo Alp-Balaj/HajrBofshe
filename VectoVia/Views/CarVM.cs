@@ -2,7 +2,7 @@
 {
     public class CarVM
     {
-        public string Marka { get; set; }
+        public int MarkaID { get; set; }
 
         public string Modeli { get; set; }
 

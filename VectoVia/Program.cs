@@ -5,13 +5,14 @@ using VectoVia.Models.TaxiCars;
 using VectoVia.Models.Users.Services;
 using VectoVia.Models.Users;
 using Microsoft.EntityFrameworkCore;
-using VectoVia.Models.Cars.NewFolder;
 using VectoVia.Models.KompaniaRents.Services;
 using vectovia.Models.PickUpLocations.Services;
 using vectovia.Models.PickUpLocations;
 using VectoVia.Data;
 using VectoVia.Models.KompaniaTaksive;
 using VectoVia.Models.KompaniaTaksive.Services;
+using vectovia.Models.Cars;
+using vectovia.Models.Cars.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,23 +20,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("AlpLaptopString") //Ndrro emrin e stringut qitu per me connect to your database
+    builder.Configuration.GetConnectionString("EdrinLaptopString") //Ndrro emrin e stringut qitu per me connect to your database
 ));
 
 builder.Services.AddDbContext<CarsDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("AlpLaptopString")
+    builder.Configuration.GetConnectionString("EdrinLaptopString")
 ));
 
 builder.Services.AddDbContext<KompaniaTaxiDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("AlpLaptopString")
+    builder.Configuration.GetConnectionString("EdrinLaptopString")
 ));
 
 builder.Services.AddDbContext<TaxiCarsDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("AlpLaptopString")
+    builder.Configuration.GetConnectionString("EdrinLaptopString")
 ));
 
 builder.Services.AddDbContext<KompaniaRentDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("AlpLaptopString")
+    builder.Configuration.GetConnectionString("EdrinLaptopString")
 ));
 
 
@@ -47,6 +48,7 @@ builder.Services.AddTransient<TaxiCarServices>();
 builder.Services.AddTransient<KompaniaRentServices>();
 builder.Services.AddTransient<KompaniaTaxiServices>();
 builder.Services.AddTransient<QytetServices>();
+builder.Services.AddTransient<MarkaServices>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

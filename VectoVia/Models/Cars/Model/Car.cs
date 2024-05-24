@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using VectoVia_LabCourse.Models.Cars.Model;
 
 namespace VectoVia.Models.Cars.Model
 {
@@ -7,7 +9,10 @@ namespace VectoVia.Models.Cars.Model
         [Key]
         public int Tabelat { get; set; }
 
-        public string Marka { get; set; }
+        public int MarkaID { get; set; }
+        [ForeignKey("MarkaID")]
+
+        public Marka Marka { get; set; }
 
         public string Modeli { get; set; }
 
