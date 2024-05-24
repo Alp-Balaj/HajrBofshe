@@ -16,10 +16,11 @@ namespace VectoVia.Models.Users.Services
         {
             var _role = new Role
             {
+                RoleID = temp.RoleID,
                 LlojiIRolit = temp.LlojiIRolit,
             };
             _context.Roles.Add(_role);
-            _context.SaveChanges();
+            _context.SaveChanges(); 
         }
 
         public List<Role> GetRole()
@@ -37,6 +38,7 @@ namespace VectoVia.Models.Users.Services
             var _role = _context.Roles.FirstOrDefault(n => n.RoleID == _RoleID);
             if (_role != null)
             {
+                _role.RoleID = _RoleID;
                 _role.LlojiIRolit = role.LlojiIRolit;
                 
 
@@ -55,6 +57,12 @@ namespace VectoVia.Models.Users.Services
                 _context.Roles.Remove(_roles);
                 _context.SaveChanges();
             }
+        }
+
+        public string GetRoleNameById(int roleId)
+        {
+            var role = _context.Roles.FirstOrDefault(r => r.RoleID == roleId);
+            return role?.LlojiIRolit;
         }
 
     }

@@ -8,11 +8,11 @@ using VectoVia.Models.Users;
 
 #nullable disable
 
-namespace VectoVia_LabCourse.Migrations
+namespace vectovia.Migrations.UsersDb
 {
     [DbContext(typeof(UsersDbContext))]
-    [Migration("20240522220848_UserTable")]
-    partial class UserTable
+    [Migration("20240524224324_UserAndRoleMigration")]
+    partial class UserAndRoleMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,10 +27,7 @@ namespace VectoVia_LabCourse.Migrations
             modelBuilder.Entity("VectoVia.Models.Users.Model.Role", b =>
                 {
                     b.Property<int>("RoleID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleID"));
 
                     b.Property<string>("LlojiIRolit")
                         .IsRequired()

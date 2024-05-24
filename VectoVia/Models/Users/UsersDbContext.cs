@@ -24,6 +24,11 @@ namespace VectoVia.Models.Users
                 .WithMany(r => r.Users)        // Each Role has many Users
                 .HasForeignKey(u => u.RoleID)  // The foreign key in User
                 .OnDelete(DeleteBehavior.Restrict); // Optional: Define the delete behavior
+
+            modelBuilder.Entity<Role>()
+                .Property(r => r.RoleID)
+                .ValueGeneratedNever();         // Ensure RoleID is not auto-generated
+
         }
 
     }

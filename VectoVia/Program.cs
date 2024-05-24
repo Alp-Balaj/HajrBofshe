@@ -49,6 +49,9 @@ builder.Services.AddTransient<KompaniaTaxiServices>();
 builder.Services.AddTransient<QytetServices>();
 builder.Services.AddTransient<RoleServices>();
 
+var secretKey = SecretKeyGenerator.GenerateSecretKey(32);
+builder.Services.AddScoped<JwtService>(serviceProvider => new JwtService(secretKey));
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

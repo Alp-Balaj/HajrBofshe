@@ -1,11 +1,16 @@
-﻿using VectoVia.Models.Users.Model;
+﻿using vectovia.Models.Users.Services;
+using vectovia.Views;
+using VectoVia.Models.Users.Model;
 using VectoVia.Views;
+
 
 namespace VectoVia.Models.Users.Services
 {
     public class UserServices
     {
         private UsersDbContext _context;
+        
+
         public UserServices(UsersDbContext context)
         {
             _context = context;
@@ -65,5 +70,76 @@ namespace VectoVia.Models.Users.Services
             }
         }
 
+        public bool VerifyUserLogin(string username, string password)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
+            return user != null;
+        }
+
+        public User GetUserByUsernameAndPassword(string username, string password)
+        {
+            return _context.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
+        }
+
+        public RegistrationResults RegisterUser(RegisterVM registerData)
+        {
+            // Check if username or email already exists
+            bool usernameExists = _context.Users.Any(u => u.Username == registerData.Username);
+            bool emailExists = _context.Users.Any(u => u.Email == registerData.Email);
+
+            if (usernameExists)
+            {
+                return new RegistrationResults
+                {
+                    Success = false,
+                    Message = "Username already exists. Please choose a different username."
+                };
+            }
+
+            if (emailExists)
+            {
+                return new RegistrationResults
+                {
+                    Success = false,
+                    Message = "Email already exists. Please use a different email address."
+                };
+            }
+
+            int defaultRoleId = 1; // Set the default role ID here
+
+            // Check if any users exist in the database
+            bool isFirstUser = !_context.Users.Any();
+
+            // If it's the first user, assign admin role (role ID = 0), otherwise assign default role
+            int roleId = isFirstUser ? 0 : defaultRoleId;
+
+            bool roleExists = _context.Roles.FirstOrDefault(r => r.RoleID == roleId) != null;
+
+            if (!roleExists)
+            {
+                roleId = defaultRoleId; // This ensures a role is assigned if it was missing
+            }
+
+            var user = new User
+            {
+                Emri = registerData.Emri,
+                Mbiemri = registerData.Mbiemri,
+                Username = registerData.Username,
+                Email = registerData.Email,
+                Password = registerData.Password,
+                RoleID = roleId
+            };
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            return new RegistrationResults
+            {
+                Success = true,
+                Message = "User registered successfully."
+            };
+        }
+
     }
 }
+
