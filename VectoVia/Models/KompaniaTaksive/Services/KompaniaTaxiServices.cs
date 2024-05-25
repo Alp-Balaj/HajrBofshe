@@ -1,5 +1,7 @@
 ﻿using VectoVia.Models.KompaniaTaksive.Model;
+using VectoVia.Models.Users.Model;
 using VectoVia.Views;
+using VectoVia.Models.KompaniaTaksive;
 
 namespace VectoVia.Models.KompaniaTaksive.Services
 {
@@ -21,10 +23,10 @@ namespace VectoVia.Models.KompaniaTaksive.Services
                 Location = kompaniaTaxi.Location,
                 ContactInfo = kompaniaTaxi.ContactInfo,
                 Sigurimi = kompaniaTaxi.Sigurimi,
-                QytetiId = kompaniaTaxi.QytetiId, 
+                QytetiId = kompaniaTaxi.QytetiId,
             };
             _context.KompaniaTaksive.Add(hello);
-            _context.SaveChanges();          
+            _context.SaveChanges();
         }
 
         public List<Model.KompaniaTaxi> GetKompaniteTaxive()
@@ -36,6 +38,34 @@ namespace VectoVia.Models.KompaniaTaksive.Services
         {
             return _context.KompaniaTaksive.FirstOrDefault(n => n.CompanyID == ID);
         }
+        public KompaniaTaxi UpdateKompaniaTaxiByID(int ID, KompaniaTaxiVM kompaniaTaxi)
+        {
+            var _kompaniaTaxi = _context.KompaniaTaksive.FirstOrDefault(n => n.CompanyID == ID);
+            if (_kompaniaTaxi != null)
+            {
+                _kompaniaTaxi.Kompania = kompaniaTaxi.Kompania;
+                _kompaniaTaxi.Location = kompaniaTaxi.Location;
+                _kompaniaTaxi.ContactInfo = kompaniaTaxi.ContactInfo;
+                _kompaniaTaxi.Sigurimi = kompaniaTaxi.Sigurimi;
+                _kompaniaTaxi.QytetiId = kompaniaTaxi.QytetiId; //if ms vone me shtu
+
+                _context.SaveChanges();
+            }
+
+            return _kompaniaTaxi;
+
+        }
+
+        public void DeleteKompaniaTaxiByID(int ID)
+        {
+            var _kompaniaTaxi = _context.KompaniaTaksive.FirstOrDefault(n => n.CompanyID == ID);
+            if (_kompaniaTaxi != null)
+            {
+                _context.KompaniaTaksive.Remove(_kompaniaTaxi);
+                _context.SaveChanges();
+            }
+        }
 
     }
 }
+

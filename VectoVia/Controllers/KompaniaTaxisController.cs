@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using VectoVia.Models.KompaniaRents.Services;
 using VectoVia.Models.KompaniaTaksive.Services;
 using VectoVia.Models.Users.Services;
 using VectoVia.Views;
@@ -39,6 +40,20 @@ namespace VectoVia.Controllers
             _KompaniaTaxiServices.AddKompaniaTaxi(kompaniaTaxi);
             return Ok();
         }
+        [HttpPut("update-KompaniaTaxi-by-id/{Companyid}")]
+        public IActionResult UpdateKompaniaTaxiByID(int Companyid, [FromBody] KompaniaTaxiVM kompaniaTaxi)
+        {
+            var updatedKompaniaTaxi = _KompaniaTaxiServices.UpdateKompaniaTaxiByID(Companyid, kompaniaTaxi);
+            return Ok(updatedKompaniaTaxi);
+        }
+
+        [HttpDelete("delete-kompaniaTaxi-by-id/{Companyid}")]
+        public IActionResult DeleteKompaniTaxiByID(int Companyid)
+        {
+            _KompaniaTaxiServices.DeleteKompaniaTaxiByID(Companyid);
+            return Ok();
+        }
 
     }
 }
+
