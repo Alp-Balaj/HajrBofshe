@@ -62,26 +62,33 @@ namespace VectoVia.Controllers
             return Ok();
         }
 
+
+
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginVM loginVM)
+        public IActionResult Login([FromBody] LoginVM loginData)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var user = _userService.GetUserByUsernameAndPassword(loginVM.Username, loginVM.Password);
+            var user = _userService.GetUserByUsernameAndPassword(loginData.Username, loginData.Password);
+
             if (user == null)
             {
-                return Unauthorized(new { message = "Invalid username or password" });
+                return Unauthorized(new { error = "Invalid username or password" });
             }
 
-            var roleName = _roleService.GetRoleNameById(user.RoleID); // Use RoleServices to get role name
+            var roleName = _roleService.GetRoleNameById(user.RoleID); //gets role name
 
-            // Generate JWT token
+            // JWT
             var token = _jwtService.GenerateToken(user.Username, roleName);
+
+            // Return token
             return Ok(new { token });
         }
+
+
 
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterVM registerData)

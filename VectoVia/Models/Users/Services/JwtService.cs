@@ -8,9 +8,9 @@ namespace VectoVia.Models.Users.Services
 {
     public class JwtService
     {
-        private readonly string _secretKey;
+        private readonly byte[] _secretKey;
 
-        public JwtService(string secretKey)
+        public JwtService(byte[] secretKey)
         {
             _secretKey = secretKey;
         }
@@ -18,7 +18,7 @@ namespace VectoVia.Models.Users.Services
         public string GenerateToken(string username, string role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_secretKey);
+            var key = new SymmetricSecurityKey(_secretKey);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -28,7 +28,7 @@ namespace VectoVia.Models.Users.Services
                     new Claim(ClaimTypes.Role, role)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1), // Token expiration time
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);

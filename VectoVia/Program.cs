@@ -12,6 +12,7 @@ using vectovia.Models.PickUpLocations;
 using VectoVia.Data;
 using VectoVia.Models.KompaniaTaksive;
 using VectoVia.Models.KompaniaTaksive.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,8 +50,9 @@ builder.Services.AddTransient<KompaniaTaxiServices>();
 builder.Services.AddTransient<QytetServices>();
 builder.Services.AddTransient<RoleServices>();
 
-var secretKey = SecretKeyGenerator.GenerateSecretKey(32);
+byte[] secretKey = SecretKeyGenerator.GenerateSecretKey();
 builder.Services.AddScoped<JwtService>(serviceProvider => new JwtService(secretKey));
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

@@ -1,24 +1,18 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-public class SecretKeyGenerator
+public static class SecretKeyGenerator
 {
-    public static string GenerateSecretKey(int length)
+    public static byte[] GenerateSecretKey()
     {
-        const string validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        var randomBytes = new byte[length];
+        const int keySizeInBytes = 32; // 256 bits
+        byte[] keyBytes = new byte[keySizeInBytes];
 
         using (var rng = new RNGCryptoServiceProvider())
         {
-            rng.GetBytes(randomBytes);
+            rng.GetBytes(keyBytes);
         }
 
-        var chars = new char[length];
-        for (int i = 0; i < length; i++)
-        {
-            chars[i] = validChars[randomBytes[i] % validChars.Length];
-        }
-
-        return new string(chars);
+        return keyBytes;
     }
 }
