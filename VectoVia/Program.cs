@@ -20,23 +20,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("LorikLaptopString") //Ndrro emrin e stringut qitu per me connect to your database
+    builder.Configuration.GetConnectionString("AlpLaptopString") //Ndrro emrin e stringut qitu per me connect to your database
 ));
 
 builder.Services.AddDbContext<CarsDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("LorikLaptopString")
+    builder.Configuration.GetConnectionString("AlpLaptopString")
 ));
 
 builder.Services.AddDbContext<KompaniaTaxiDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("LorikLaptopString")
+    builder.Configuration.GetConnectionString("AlpLaptopString")
 ));
 
 builder.Services.AddDbContext<TaxiCarsDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("LorikLaptopString")
+    builder.Configuration.GetConnectionString("AlpLaptopString")
 ));
 
 builder.Services.AddDbContext<KompaniaRentDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("LorikLaptopString")
+    builder.Configuration.GetConnectionString("AlpLaptopString")
 ));
 
 
