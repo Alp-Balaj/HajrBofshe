@@ -33,13 +33,14 @@ namespace VectoVia.Controllers
             return Ok(users);
         }
 
-        [HttpGet("get-Qyteti-id/{id}")]
-        public IActionResult GetQytetiByID(int QytetiId)
+        [HttpGet("get-qyteti-id/{id}")]
+        public IActionResult GetQytetiByID(int id)
         {
-            var user = _QytetServices.GetQytetiByID(QytetiId);
-            return Ok(user);
+            var qyteti = _QytetServices.GetQytetiByID(id);
+            return Ok(qyteti);
         }
-        [HttpPut("update-user-by-id/{QytetiId}")]
+
+        [HttpPut("update-qyteti-by-id/{QytetiId}")]
         public IActionResult UpdateQytetetByID(int QytetiId, [FromBody] QytetiVM Qyteti)
         {
             var updatedQyteti = _QytetServices.UpdateQytetetByID(QytetiId, Qyteti);

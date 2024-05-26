@@ -28,9 +28,9 @@ namespace VectoVia.Models.KompaniaTaksive.Services
             var allQyteti = _context.Qytetet.ToList();
             return allQyteti;
         }
-        public Qyteti GetQytetiByID(int QytetiId)
+        public Qyteti GetQytetiByID(int _QytetiID)
         {
-            return _context.Qytetet.FirstOrDefault(n => n.QytetiId == QytetiId);
+            return _context.Qytetet.FirstOrDefault(n => n.QytetiId == _QytetiID);
         }
 
         public Qyteti UpdateQytetetByID(int QytetiId, QytetiVM qyteti)
