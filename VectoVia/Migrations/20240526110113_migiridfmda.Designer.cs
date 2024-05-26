@@ -2,17 +2,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VectoVia.Models.TaxiCars;
 
 #nullable disable
 
-namespace VectoVia.Migrations
+namespace VectoVia.Migrations.TaxiCarsDb
 {
     [DbContext(typeof(TaxiCarsDbContext))]
-    partial class TaxiCarsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240526110113_migiridfmda")]
+    partial class migiridfmda
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

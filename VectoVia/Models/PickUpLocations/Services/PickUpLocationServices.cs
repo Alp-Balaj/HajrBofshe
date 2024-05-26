@@ -12,7 +12,7 @@ namespace vectovia.Models.PickUpLocations.Services
 
         public PickUpLocationServices(KompaniaRentDbContext context)
         {
-            _context = context; 
+            _context = context;
         }
 
 
@@ -52,7 +52,6 @@ namespace vectovia.Models.PickUpLocations.Services
                 _pickUpLocation.Address = pickUpLocation.Address;
                 _pickUpLocation.city = pickUpLocation.city;
                 _pickUpLocation.ZipCode = pickUpLocation.ZipCode;
-                _pickUpLocation.CompanyID = pickUpLocation.CompanyID;
 
                 _context.SaveChanges();
             }

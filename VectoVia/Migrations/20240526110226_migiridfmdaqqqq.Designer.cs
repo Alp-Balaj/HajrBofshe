@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VectoVia.Data;
 
 #nullable disable
 
-namespace VectoVia.Migrations
+namespace VectoVia.Migrations.KompaniaRentDb
 {
     [DbContext(typeof(KompaniaRentDbContext))]
-    partial class KompaniaRentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240526110226_migiridfmdaqqqq")]
+    partial class migiridfmdaqqqq
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

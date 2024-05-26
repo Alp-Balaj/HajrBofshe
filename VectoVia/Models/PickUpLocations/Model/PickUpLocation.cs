@@ -8,6 +8,7 @@ namespace vectovia.Models.PickUpLocations.Model
     {
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PickUpLocationID { get; set; }
 
         public string locationName { get; set; }
@@ -18,10 +19,10 @@ namespace vectovia.Models.PickUpLocations.Model
 
         public string ZipCode { get; set; }
 
-        [Required]
-        public int CompanyID { get; set; }
+        public int? CompanyID { get; set; }
 
-        [ForeignKey("CompanyID")]
-        public KompaniaRent KompaniaRent { get; set; }
+
+        //navigation property
+        public KompaniaRent RentCompany { get; set; }
     }
 }
