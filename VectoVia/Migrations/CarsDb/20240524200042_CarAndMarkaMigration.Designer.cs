@@ -2,19 +2,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-
 using vectovia.Models.Cars;
 
 #nullable disable
 
 namespace vectovia.Migrations.CarsDb
-
 {
     [DbContext(typeof(CarsDbContext))]
-    partial class CarsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240524200042_CarAndMarkaMigration")]
+    partial class CarAndMarkaMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +36,6 @@ namespace vectovia.Migrations.CarsDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-
                     b.Property<int>("MarkaID")
                         .HasColumnType("int");
 
@@ -51,7 +51,6 @@ namespace vectovia.Migrations.CarsDb
                         .HasColumnType("int");
 
                     b.HasKey("Tabelat");
-
 
                     b.HasIndex("MarkaID");
 
@@ -89,7 +88,6 @@ namespace vectovia.Migrations.CarsDb
             modelBuilder.Entity("VectoVia_LabCourse.Models.Cars.Model.Marka", b =>
                 {
                     b.Navigation("CarDBO");
-
                 });
 #pragma warning restore 612, 618
         }
