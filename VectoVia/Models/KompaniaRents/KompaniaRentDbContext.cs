@@ -17,9 +17,9 @@ namespace VectoVia.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<KompaniaRent>().HasMany(kr => kr.PickUpLocations).WithOne
-                 (pl => pl.RentCompany).HasForeignKey(pl => pl.CompanyID);
+                 (pl => pl.RentCompany).HasForeignKey(pl => pl.CompanyID).OnDelete(DeleteBehavior.Cascade);
 
-
+            base.OnModelCreating(modelBuilder);
         }
     }
 

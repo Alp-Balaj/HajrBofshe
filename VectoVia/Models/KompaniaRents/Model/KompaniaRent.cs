@@ -27,7 +27,7 @@ namespace VectoVia.Models.KompaniaRents.Model
         {
             get; set;
 
-        }
+        } = new List<PickUpLocation>();
     }
 }
 

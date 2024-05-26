@@ -24,29 +24,24 @@ namespace VectoVia.Models.KompaniaRents.Services
                 Kompania = kompaniaRentVM.Kompania,
                 Qyteti = kompaniaRentVM.Qyteti,
                 ContactInfo = kompaniaRentVM.ContactInfo,
-                Sigurimi = kompaniaRentVM.Sigurimi
+                Sigurimi = kompaniaRentVM.Sigurimi,
+                PickUpLocations = new List<PickUpLocation>() // Initialize the collection
             };
 
-            // Add the KompaniaRent to the context
             _context.KompaniaRents.Add(kompaniaRent);
             _context.SaveChanges();
 
-            // Associate PickUpLocations
             var pickUpLocations = _context.PickUpLocations
                 .Where(pl => kompaniaRentVM.PickUpLocationIDs.Contains(pl.PickUpLocationID))
                 .ToList();
 
             foreach (var pickUpLocation in pickUpLocations)
             {
-               
-                // Add the PickUpLocation to the KompaniaRent
                 kompaniaRent.PickUpLocations.Add(pickUpLocation);
             }
 
-            // Save changes to persist the association
             _context.SaveChanges();
         }
-
 
         public List<Model.KompaniaRent> GetKompaniteRent()
         {
