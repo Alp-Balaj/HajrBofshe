@@ -18,13 +18,13 @@ namespace VectoVia.Controllers
     {
         private readonly UserServices _userService;
         private readonly JwtService _jwtService;
-        private readonly RoleServices _roleService; // Change here
+        private readonly RoleServices _roleService;
 
-        public UserController(UserServices userServices, JwtService jwtService, RoleServices roleService) // Change here
+        public UserController(UserServices userServices, JwtService jwtService, RoleServices roleService) 
         {
             _userService = userServices;
             _jwtService = jwtService;
-            _roleService = roleService; // Change here
+            _roleService = roleService; 
         }
 
         [HttpGet("get-users")]
@@ -72,7 +72,7 @@ namespace VectoVia.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = _userService.GetUserByUsernameAndPassword(loginData.Username, loginData.Password);
+            var user = _userService.VerifyUserLogin(loginData.Username, loginData.Password);
 
             if (user == null)
             {

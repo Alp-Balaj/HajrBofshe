@@ -21,4 +21,6 @@ public class KompaniaTaxiDbContext : DbContext
             .HasOne(k => k.City)
             .WithMany(q => q.KompaniaTaxis)
             .HasForeignKey(k => k.QytetiId);
+
+
 }

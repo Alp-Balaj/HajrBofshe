@@ -9,6 +9,7 @@ namespace VectoVia.Models.Users.Services
     public class UserServices
     {
         private UsersDbContext _context;
+        private RoleServices _roleServices;
         
 
         public UserServices(UsersDbContext context)
@@ -70,13 +71,9 @@ namespace VectoVia.Models.Users.Services
             }
         }
 
-        public bool VerifyUserLogin(string username, string password)
-        {
-            var user = _context.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
-            return user != null;
-        }
+        
 
-        public User GetUserByUsernameAndPassword(string username, string password)
+        public User VerifyUserLogin(string username, string password)
         {
             return _context.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
         }
@@ -118,6 +115,7 @@ namespace VectoVia.Models.Users.Services
             if (!roleExists)
             {
                 roleId = defaultRoleId; // This ensures a role is assigned if it was missing
+                //MessageBox.Show("The role you were trying to give doesn't exists.");
             }
 
             var user = new User
