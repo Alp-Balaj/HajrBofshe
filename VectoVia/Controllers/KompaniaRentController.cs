@@ -45,11 +45,15 @@ namespace VectoVia.Controllers
             return Ok(updatedKompaniaRent);
         }
 
-        [HttpDelete("delete-kompaniaRent-by-id/{companyid}")]
-        public IActionResult DeleteKompaniRentByID(int companyid)
+        [HttpDelete("delete-kompaniaRent-by-id/{companyID}")]
+        public IActionResult DeleteKompaniRentByID(int companyID)
         {
-            _KompaniaRentServices.DeleteKompaniRentByID(companyid);
-            return Ok();
+            var deletedKompaniaRent = _KompaniaRentServices.DeleteKompaniRentByID(companyID);
+            if (deletedKompaniaRent == null)
+            {
+                return NotFound(new { message = "KompaniaRent not found" });
+            }
+            return Ok(new { message = "KompaniaRent deleted successfully" });
         }
 
     }

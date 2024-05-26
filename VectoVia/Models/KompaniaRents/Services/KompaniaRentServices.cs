@@ -99,14 +99,16 @@ namespace VectoVia.Models.KompaniaRents.Services
         }
 
 
-        public void DeleteKompaniRentByID(int KompaniaRentID)
+        public KompaniaRent DeleteKompaniRentByID(int companyID)
         {
-            var _kompaniaRent = _context.KompaniaRents.FirstOrDefault(n => n.CompanyID == KompaniaRentID);
-            if (_kompaniaRent != null)
+            var kompaniaRent = _context.KompaniaRents.FirstOrDefault(n => n.CompanyID == companyID);
+            if (kompaniaRent != null)
             {
-                _context.KompaniaRents.Remove(_kompaniaRent);
+                _context.KompaniaRents.Remove(kompaniaRent);
                 _context.SaveChanges();
+                return kompaniaRent;
             }
+            return null;
         }
 
         public List<KompaniaRent> GetKompaniteRentWithPickUpLocations()
