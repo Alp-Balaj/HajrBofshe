@@ -20,19 +20,15 @@ namespace VectoVia.Controllers
             _KompaniaRentServices = KompaniaRentServices;
         }
 
+    
+
         [HttpGet("get-kompaniteRent")]
         public IActionResult GetKompaniteRent()
         {
-            var kompaniaRent = _KompaniaRentServices.GetKompaniteRent();
-            return Ok(kompaniaRent);
+            var kompaniaRentWithPickUpLocations = _KompaniaRentServices.GetKompaniteRentWithPickUpLocations();
+            return Ok(kompaniaRentWithPickUpLocations);
         }
 
-        [HttpGet("get-kompaniteRent-id/{companyid}")]
-        public IActionResult GetKompaniteRentByID(int companyid)
-        {
-            var kompaniaRent = _KompaniaRentServices.GetKompaniteRentByID(companyid);
-            return Ok(kompaniaRent);
-        }
 
         [HttpPost("add-KompaniaRent")]
 

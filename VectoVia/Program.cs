@@ -13,6 +13,8 @@ using VectoVia.Data;
 using VectoVia.Models.KompaniaTaksive;
 using VectoVia.Models.KompaniaTaksive.Services;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json.Serialization;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +41,11 @@ builder.Services.AddDbContext<KompaniaRentDbContext>(options => options.UseSqlSe
     builder.Configuration.GetConnectionString("LorikLaptopString")
 ));
 
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 
 
 builder.Services.AddTransient<UserServices>();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using vectovia.Models.PickUpLocations.Model;
 using VectoVia.Data;
 using VectoVia.Models.KompaniaRents;
 using VectoVia.Models.KompaniaRents.Model;
@@ -12,7 +13,7 @@ namespace VectoVia.Models.KompaniaRents.Services
         private KompaniaRentDbContext _context;
         public KompaniaRentServices(KompaniaRentDbContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
 
@@ -37,12 +38,15 @@ namespace VectoVia.Models.KompaniaRents.Services
 
             foreach (var pickUpLocation in pickUpLocations)
             {
-                pickUpLocation.CompanyID = kompaniaRent.CompanyID;
+               
+                // Add the PickUpLocation to the KompaniaRent
+                kompaniaRent.PickUpLocations.Add(pickUpLocation);
             }
 
-            // Save changes to update PickUpLocations with the new CompanyID
+            // Save changes to persist the association
             _context.SaveChanges();
         }
+
 
         public List<Model.KompaniaRent> GetKompaniteRent()
         {
@@ -108,6 +112,13 @@ namespace VectoVia.Models.KompaniaRents.Services
                 _context.KompaniaRents.Remove(_kompaniaRent);
                 _context.SaveChanges();
             }
+        }
+
+        public List<KompaniaRent> GetKompaniteRentWithPickUpLocations()
+        {
+            return _context.KompaniaRents
+                .Include(k => k.PickUpLocations)
+                .ToList();
         }
 
 
