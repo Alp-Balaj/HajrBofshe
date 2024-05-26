@@ -1,9 +1,12 @@
 ﻿
 
+
+
 namespace VectoVia.Views
 {
+    
     public class UserVM
-    {
+    { 
         public string Emri { get; set; }
 
         public string Mbiemri { get; set; }
@@ -14,7 +17,7 @@ namespace VectoVia.Views
 
         public string Password { get; set; }
 
-        public int Role { get; set; }
+        public int RoleID { get; set; }
 
     }
 }

@@ -1,6 +1,8 @@
-﻿using vectovia.Models.PickUpLocations.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using vectovia.Models.PickUpLocations.Model;
 using vectovia.Views;
 using VectoVia.Data;
+using VectoVia.Models.KompaniaRents.Model;
 using VectoVia.Views;
 
 namespace vectovia.Models.PickUpLocations.Services
@@ -12,7 +14,7 @@ namespace vectovia.Models.PickUpLocations.Services
 
         public PickUpLocationServices(KompaniaRentDbContext context)
         {
-            _context = context; 
+            _context = context;
         }
 
 
@@ -33,7 +35,11 @@ namespace vectovia.Models.PickUpLocations.Services
 
         public List<Model.PickUpLocation> GetPickUpLocations()
         {
-            var allPickUpLocations = _context.PickUpLocations.ToList();
+            // Eager loading the related KompaniaRent entities
+            var allPickUpLocations = _context.PickUpLocations
+                .Include(p => p.RentCompany)
+                .ToList();
+
             return allPickUpLocations;
         }
 
@@ -52,7 +58,6 @@ namespace vectovia.Models.PickUpLocations.Services
                 _pickUpLocation.Address = pickUpLocation.Address;
                 _pickUpLocation.city = pickUpLocation.city;
                 _pickUpLocation.ZipCode = pickUpLocation.ZipCode;
-                _pickUpLocation.CompanyID = pickUpLocation.CompanyID;
 
                 _context.SaveChanges();
             }
@@ -70,6 +75,8 @@ namespace vectovia.Models.PickUpLocations.Services
                 _context.SaveChanges();
             }
         }
+
+
 
 
     }

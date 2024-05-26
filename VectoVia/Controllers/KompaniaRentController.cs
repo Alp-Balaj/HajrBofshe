@@ -20,19 +20,15 @@ namespace VectoVia.Controllers
             _KompaniaRentServices = KompaniaRentServices;
         }
 
+    
+
         [HttpGet("get-kompaniteRent")]
         public IActionResult GetKompaniteRent()
         {
-            var kompaniaRent = _KompaniaRentServices.GetKompaniteRent();
-            return Ok(kompaniaRent);
+            var kompaniaRentWithPickUpLocations = _KompaniaRentServices.GetKompaniteRentWithPickUpLocations();
+            return Ok(kompaniaRentWithPickUpLocations);
         }
 
-        [HttpGet("get-kompaniteRent-id/{companyid}")]
-        public IActionResult GetKompaniteRentByID(int companyid)
-        {
-            var kompaniaRent = _KompaniaRentServices.GetKompaniteRentByID(companyid);
-            return Ok(kompaniaRent);
-        }
 
         [HttpPost("add-KompaniaRent")]
 
@@ -49,11 +45,15 @@ namespace VectoVia.Controllers
             return Ok(updatedKompaniaRent);
         }
 
-        [HttpDelete("delete-kompaniaRent-by-id/{companyid}")]
-        public IActionResult DeleteKompaniRentByID(int companyid)
+        [HttpDelete("delete-kompaniaRent-by-id/{companyID}")]
+        public IActionResult DeleteKompaniRentByID(int companyID)
         {
-            _KompaniaRentServices.DeleteKompaniRentByID(companyid);
-            return Ok();
+            var deletedKompaniaRent = _KompaniaRentServices.DeleteKompaniRentByID(companyID);
+            if (deletedKompaniaRent == null)
+            {
+                return NotFound(new { message = "KompaniaRent not found" });
+            }
+            return Ok(new { message = "KompaniaRent deleted successfully" });
         }
 
     }

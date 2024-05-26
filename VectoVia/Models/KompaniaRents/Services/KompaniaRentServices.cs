@@ -1,4 +1,6 @@
-﻿using VectoVia.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using vectovia.Models.PickUpLocations.Model;
+using VectoVia.Data;
 using VectoVia.Models.KompaniaRents;
 using VectoVia.Models.KompaniaRents.Model;
 using VectoVia.Views;
@@ -11,21 +13,33 @@ namespace VectoVia.Models.KompaniaRents.Services
         private KompaniaRentDbContext _context;
         public KompaniaRentServices(KompaniaRentDbContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
 
-        public void AddKompaniaRent(KompaniaRentVM kompaniaRent)
+        public void AddKompaniaRent(KompaniaRentVM kompaniaRentVM)
         {
-            var _kompaniaRent = new KompaniaRent()
+            var kompaniaRent = new KompaniaRent
             {
-                Kompania = kompaniaRent.Kompania,
-                PickUpLocation = kompaniaRent.PickUpLocation,
-                Qyteti = kompaniaRent.Qyteti,
-                ContactInfo = kompaniaRent.ContactInfo,
-                Sigurimi = kompaniaRent.Sigurimi,
+                Kompania = kompaniaRentVM.Kompania,
+                Qyteti = kompaniaRentVM.Qyteti,
+                ContactInfo = kompaniaRentVM.ContactInfo,
+                Sigurimi = kompaniaRentVM.Sigurimi,
+                PickUpLocations = new List<PickUpLocation>() // Initialize the collection
             };
-            _context.KompaniaRents.Add(_kompaniaRent);
+
+            _context.KompaniaRents.Add(kompaniaRent);
+            _context.SaveChanges();
+
+            var pickUpLocations = _context.PickUpLocations
+                .Where(pl => kompaniaRentVM.PickUpLocationIDs.Contains(pl.PickUpLocationID))
+                .ToList();
+
+            foreach (var pickUpLocation in pickUpLocations)
+            {
+                kompaniaRent.PickUpLocations.Add(pickUpLocation);
+            }
+
             _context.SaveChanges();
         }
 
@@ -39,32 +53,69 @@ namespace VectoVia.Models.KompaniaRents.Services
             return _context.KompaniaRents.FirstOrDefault(n => n.CompanyID == KompaniaRentID);
         }
 
-        public KompaniaRent UpdateKompaniaRentByID(int KompaniaRentID, KompaniaRentVM KompaniaRent)
+        public KompaniaRent UpdateKompaniaRentByID(int KompaniaRentID, KompaniaRentVM kompaniaRentVM)
         {
-            var _kompaniaRent = _context.KompaniaRents.FirstOrDefault(n => n.CompanyID == KompaniaRentID);
+            var _kompaniaRent = _context.KompaniaRents
+                .Include(kr => kr.PickUpLocations) // Include the PickUpLocations in the query
+                .FirstOrDefault(n => n.CompanyID == KompaniaRentID);
+
             if (_kompaniaRent != null)
             {
-                _kompaniaRent.Kompania = KompaniaRent.Kompania;
-                _kompaniaRent.PickUpLocation = KompaniaRent.PickUpLocation;
-                _kompaniaRent.Qyteti = KompaniaRent.Qyteti;
-                _kompaniaRent.ContactInfo = KompaniaRent.ContactInfo;
-                _kompaniaRent.Sigurimi = KompaniaRent.Sigurimi;
+                _kompaniaRent.Kompania = kompaniaRentVM.Kompania;
+                _kompaniaRent.Qyteti = kompaniaRentVM.Qyteti;
+                _kompaniaRent.ContactInfo = kompaniaRentVM.ContactInfo;
+                _kompaniaRent.Sigurimi = kompaniaRentVM.Sigurimi;
+
+                // Update PickUpLocations
+                var existingLocations = _kompaniaRent.PickUpLocations.ToList();
+                var newLocationIDs = kompaniaRentVM.PickUpLocationIDs ?? new List<int>();
+
+                // Remove locations that are no longer selected
+                foreach (var existingLocation in existingLocations)
+                {
+                    if (!newLocationIDs.Contains(existingLocation.PickUpLocationID))
+                    {
+                        _kompaniaRent.PickUpLocations.Remove(existingLocation);
+                    }
+                }
+
+                // Add new locations that are selected
+                foreach (var newLocationID in newLocationIDs)
+                {
+                    if (!_kompaniaRent.PickUpLocations.Any(pl => pl.PickUpLocationID == newLocationID))
+                    {
+                        var newLocation = _context.PickUpLocations.FirstOrDefault(pl => pl.PickUpLocationID == newLocationID);
+                        if (newLocation != null)
+                        {
+                            _kompaniaRent.PickUpLocations.Add(newLocation);
+                        }
+                    }
+                }
 
                 _context.SaveChanges();
             }
 
             return _kompaniaRent;
-
         }
 
-        public void DeleteKompaniRentByID(int KompaniaRentID)
+
+        public KompaniaRent DeleteKompaniRentByID(int companyID)
         {
-            var _kompaniaRent = _context.KompaniaRents.FirstOrDefault(n => n.CompanyID == KompaniaRentID);
-            if (_kompaniaRent != null)
+            var kompaniaRent = _context.KompaniaRents.FirstOrDefault(n => n.CompanyID == companyID);
+            if (kompaniaRent != null)
             {
-                _context.KompaniaRents.Remove(_kompaniaRent);
+                _context.KompaniaRents.Remove(kompaniaRent);
                 _context.SaveChanges();
+                return kompaniaRent;
             }
+            return null;
+        }
+
+        public List<KompaniaRent> GetKompaniteRentWithPickUpLocations()
+        {
+            return _context.KompaniaRents
+                .Include(k => k.PickUpLocations)
+                .ToList();
         }
 
 

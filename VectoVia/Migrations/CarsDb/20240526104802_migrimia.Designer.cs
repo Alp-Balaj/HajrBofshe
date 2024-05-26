@@ -4,60 +4,56 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using VectoVia.Models.Users;
+using VectoVia.Models.Cars.NewFolder;
 
 #nullable disable
 
-namespace VectoVia_LabCourse.Migrations
+namespace VectoVia.Migrations.CarsDb
 {
-    [DbContext(typeof(UsersDbContext))]
-    [Migration("20240414123154_ABPcMigration3")]
-    partial class ABPcMigration3
+    [DbContext(typeof(CarsDbContext))]
+    [Migration("20240526104802_migrimia")]
+    partial class migrimia
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("VectoVia.Models.Users.Model.User", b =>
+            modelBuilder.Entity("VectoVia.Models.Cars.Model.Car", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Tabelat")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Tabelat"));
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Karburanti")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Emri")
+                    b.Property<string>("Marka")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Mbiemri")
+                    b.Property<string>("Modeli")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("Transmisioni")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Role")
+                    b.Property<int>("VitiProdhimit")
                         .HasColumnType("int");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Tabelat");
 
-                    b.HasKey("ID");
-
-                    b.ToTable("Users");
+                    b.ToTable("Cars");
                 });
 #pragma warning restore 612, 618
         }

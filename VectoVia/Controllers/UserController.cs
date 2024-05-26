@@ -1,6 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using vectovia.Views;
 using VectoVia.Models.Users.Services;
 using VectoVia.Views;
 
@@ -10,11 +16,15 @@ namespace VectoVia.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        public UserServices _userService;
+        private readonly UserServices _userService;
+        private readonly JwtService _jwtService;
+        private readonly RoleServices _roleService;
 
-        public UserController(UserServices userServices)
+        public UserController(UserServices userServices, JwtService jwtService, RoleServices roleService) 
         {
             _userService = userServices;
+            _jwtService = jwtService;
+            _roleService = roleService; 
         }
 
         [HttpGet("get-users")]
@@ -31,9 +41,7 @@ namespace VectoVia.Controllers
             return Ok(user);
         }
 
-
         [HttpPost("add-user")]
-
         public IActionResult AddUser([FromBody] UserVM user)
         {
             _userService.AddUser(user);
@@ -53,5 +61,54 @@ namespace VectoVia.Controllers
             _userService.DeleteUserByID(id);
             return Ok();
         }
+
+
+
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginVM loginData)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = _userService.VerifyUserLogin(loginData.Username, loginData.Password);
+
+            if (user == null)
+            {
+                return Unauthorized(new { error = "Invalid username or password" });
+            }
+
+            var roleName = _roleService.GetRoleNameById(user.RoleID); //gets role name
+
+            // JWT
+            var token = _jwtService.GenerateToken(user.Username, roleName);
+
+            // Return token
+            return Ok(new { token });
+        }
+
+
+
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] RegisterVM registerData)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = _userService.RegisterUser(registerData);
+
+            if (result.Success)
+            {
+                return Ok(new { message = result.Message });
+            }
+            else
+            {
+                return Conflict(new { message = result.Message });
+            }
+        }
+
     }
 }
