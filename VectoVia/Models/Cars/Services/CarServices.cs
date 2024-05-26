@@ -1,6 +1,6 @@
 ﻿using VectoVia.Models.Cars.Model;
-using VectoVia.Models.Cars.NewFolder;
 using VectoVia.Views;
+using vectovia.Models.Cars;
 
 namespace VectoVia.Models.Cars.Services
 {
@@ -16,33 +16,32 @@ namespace VectoVia.Models.Cars.Services
         {
             var _car = new Car()
             {
-                Marka = Car.Marka,
+                MarkaID = Car.MarkaID,
                 Modeli = Car.Modeli,
                 Karburanti = Car.Karburanti,
                 Transmisioni = Car.Transmisioni,
                 VitiProdhimit = Car.VitiProdhimit,
             };
-            _context.Cars.Add(_car);
+            _context.CarDBO.Add(_car);
             _context.SaveChanges();
         }
 
         public List<Car> GetCars()
         {
-            var allCars = _context.Cars.ToList();
+            var allCars = _context.CarDBO.ToList();
             return allCars;
         }
         public Car GetCarsByID(int CarID)
         {
-            return _context.Cars.FirstOrDefault(n => n.Tabelat == CarID);
+            return _context.CarDBO.FirstOrDefault(n => n.Tabelat == CarID);
         }
 
         public Car UpdateCarByID(int CarID, CarVM Car)
         {
-            var _Car = _context.Cars.FirstOrDefault(n => n.Tabelat == CarID);
+            var _Car = _context.CarDBO.FirstOrDefault(n => n.Tabelat == CarID);
             if (_Car != null)
             {
-
-                _Car.Marka = Car.Marka;
+                _Car.MarkaID = Car.MarkaID;
                 _Car.Modeli = Car.Modeli;
                 _Car.Karburanti = Car.Karburanti;
                 _Car.Transmisioni = Car.Transmisioni;
@@ -57,10 +56,10 @@ namespace VectoVia.Models.Cars.Services
 
         public void DeleteCarByID(int CarID)
         {
-            var _Car = _context.Cars.FirstOrDefault(n => n.Tabelat == CarID);
+            var _Car = _context.CarDBO.FirstOrDefault(n => n.Tabelat == CarID);
             if (_Car != null)
             {
-                _context.Cars.Remove(_Car);
+                _context.CarDBO.Remove(_Car);
                 _context.SaveChanges();
             }
         }
