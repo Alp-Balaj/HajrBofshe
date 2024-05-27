@@ -19,7 +19,8 @@ namespace vectovia.Models.Cars.Services
                 EmriMarkes = markaVM.EmriMarkes,
             };
 
-            _context.Markat.Add(Markat);    
+            _context.Markat.Add(Markat);
+            _context.SaveChanges();
 
         }
 
