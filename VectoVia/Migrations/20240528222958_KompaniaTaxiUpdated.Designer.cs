@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace vectovia.Migrations
 {
     [DbContext(typeof(KompaniaTaxiDbContext))]
-    [Migration("20240522184835_Altin")]
-    partial class Altin
+    [Migration("20240528222958_KompaniaTaxiUpdated")]
+    partial class KompaniaTaxiUpdated
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,12 +56,16 @@ namespace vectovia.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Location")
+                    b.Property<string>("PrimaryColour")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QytetiId")
                         .HasColumnType("int");
+
+                    b.Property<string>("SecondaryColour")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sigurimi")
                         .IsRequired()

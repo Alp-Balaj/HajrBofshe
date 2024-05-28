@@ -11,7 +11,9 @@ namespace VectoVia.Models.KompaniaTaksive.Model
 
         public string Kompania { get; set; }
 
-        public string Location { get; set; }
+        public string PrimaryColour { get; set; }
+
+        public string SecondaryColour { get; set; }
 
         public string ContactInfo { get; set; }
 

@@ -5,7 +5,7 @@
 namespace vectovia.Migrations
 {
     /// <inheritdoc />
-    public partial class Altin : Migration
+    public partial class KompaniaTaxiUpdated : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,7 +30,8 @@ namespace vectovia.Migrations
                     CompanyID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Kompania = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PrimaryColour = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SecondaryColour = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Sigurimi = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QytetiId = table.Column<int>(type: "int", nullable: false)
