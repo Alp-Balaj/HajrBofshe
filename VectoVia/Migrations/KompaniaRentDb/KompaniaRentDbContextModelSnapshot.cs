@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VectoVia.Data;
 
 #nullable disable
 
-namespace VectoVia.Migrations.KompaniaRentDb
+namespace vectovia.Migrations.KompaniaRentDb
 {
     [DbContext(typeof(KompaniaRentDbContext))]
-    [Migration("20240526134756_qaw")]
-    partial class qaw
+    partial class KompaniaRentDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,6 +29,10 @@ namespace VectoVia.Migrations.KompaniaRentDb
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CompanyID"));
+
+                    b.Property<string>("CompanyLogoUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactInfo")
                         .IsRequired()
@@ -92,7 +93,8 @@ namespace VectoVia.Migrations.KompaniaRentDb
                 {
                     b.HasOne("VectoVia.Models.KompaniaRents.Model.KompaniaRent", "RentCompany")
                         .WithMany("PickUpLocations")
-                        .HasForeignKey("CompanyID");
+                        .HasForeignKey("CompanyID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("RentCompany");
                 });

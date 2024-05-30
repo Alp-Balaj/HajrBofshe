@@ -25,6 +25,7 @@ namespace VectoVia.Models.KompaniaRents.Services
                 Qyteti = kompaniaRentVM.Qyteti,
                 ContactInfo = kompaniaRentVM.ContactInfo,
                 Sigurimi = kompaniaRentVM.Sigurimi,
+                CompanyLogoUrl = kompaniaRentVM.CompanyLogoUrl,
                 PickUpLocations = new List<PickUpLocation>() // Initialize the collection
             };
 
@@ -65,6 +66,7 @@ namespace VectoVia.Models.KompaniaRents.Services
                 _kompaniaRent.Qyteti = kompaniaRentVM.Qyteti;
                 _kompaniaRent.ContactInfo = kompaniaRentVM.ContactInfo;
                 _kompaniaRent.Sigurimi = kompaniaRentVM.Sigurimi;
+                _kompaniaRent.CompanyLogoUrl = kompaniaRentVM.CompanyLogoUrl;
 
                 // Update PickUpLocations
                 var existingLocations = _kompaniaRent.PickUpLocations.ToList();
