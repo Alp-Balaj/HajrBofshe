@@ -49,6 +49,10 @@ namespace vectovia.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Kompania")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

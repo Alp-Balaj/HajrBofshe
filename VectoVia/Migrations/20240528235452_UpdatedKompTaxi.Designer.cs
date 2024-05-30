@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace vectovia.Migrations
 {
     [DbContext(typeof(KompaniaTaxiDbContext))]
-    [Migration("20240528222958_KompaniaTaxiUpdated")]
-    partial class KompaniaTaxiUpdated
+    [Migration("20240528235452_UpdatedKompTaxi")]
+    partial class UpdatedKompTaxi
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,10 @@ namespace vectovia.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CompanyID"));
 
                     b.Property<string>("ContactInfo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

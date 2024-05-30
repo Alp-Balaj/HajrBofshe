@@ -20,6 +20,7 @@ namespace VectoVia.Models.KompaniaTaksive.Services
             var hello = new KompaniaTaxi()
             {
                 Kompania = kompaniaTaxi.Kompania,
+                ImageUrl = kompaniaTaxi.ImageUrl,
                 PrimaryColour = kompaniaTaxi.PrimaryColour,
                 SecondaryColour = kompaniaTaxi.SecondaryColour,
                 ContactInfo = kompaniaTaxi.ContactInfo,
@@ -45,6 +46,7 @@ namespace VectoVia.Models.KompaniaTaksive.Services
             if (_kompaniaTaxi != null)
             {
                 _kompaniaTaxi.Kompania = kompaniaTaxi.Kompania;
+                _kompaniaTaxi.ImageUrl = kompaniaTaxi.ImageUrl;
                 _kompaniaTaxi.PrimaryColour = kompaniaTaxi.PrimaryColour;
                 _kompaniaTaxi.SecondaryColour = kompaniaTaxi.SecondaryColour;
                 _kompaniaTaxi.ContactInfo = kompaniaTaxi.ContactInfo;
