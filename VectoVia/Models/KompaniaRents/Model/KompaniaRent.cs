@@ -1,6 +1,7 @@
 ﻿    using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using vectovia.Models.PickUpLocations.Model;
+using VectoVia.Models.Cars.Model;
 
 namespace VectoVia.Models.KompaniaRents.Model
 {
@@ -27,6 +28,11 @@ namespace VectoVia.Models.KompaniaRents.Model
             get; set;
 
         } = new List<PickUpLocation>();
+
+
+        public ICollection<Car> Cars { get; set; } = new List<Car>();
     }
+
+    
 }
 

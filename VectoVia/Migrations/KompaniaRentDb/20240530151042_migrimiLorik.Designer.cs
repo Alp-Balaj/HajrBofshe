@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using vectovia.Models.Cars;
+using VectoVia.Data;
 
 #nullable disable
 
-namespace vectovia.Migrations.CarsDb
+namespace vectovia.Migrations.KompaniaRentDb
 {
-    [DbContext(typeof(CarsDbContext))]
-    partial class CarsDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(KompaniaRentDbContext))]
+    [Migration("20240530151042_migrimiLorik")]
+    partial class migrimiLorik
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,7 +97,7 @@ namespace vectovia.Migrations.CarsDb
 
                     b.HasKey("CompanyID");
 
-                    b.ToTable("KompaniaRent");
+                    b.ToTable("KompaniaRents");
                 });
 
             modelBuilder.Entity("VectoVia_LabCourse.Models.Cars.Model.Marka", b =>
@@ -111,7 +114,7 @@ namespace vectovia.Migrations.CarsDb
 
                     b.HasKey("MarkaId");
 
-                    b.ToTable("Markat");
+                    b.ToTable("Marka");
                 });
 
             modelBuilder.Entity("vectovia.Models.PickUpLocations.Model.PickUpLocation", b =>
@@ -129,9 +132,6 @@ namespace vectovia.Migrations.CarsDb
                     b.Property<int?>("CompanyID")
                         .HasColumnType("int");
 
-                    b.Property<int>("RentCompanyCompanyID")
-                        .HasColumnType("int");
-
                     b.Property<string>("ZipCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -146,9 +146,9 @@ namespace vectovia.Migrations.CarsDb
 
                     b.HasKey("PickUpLocationID");
 
-                    b.HasIndex("RentCompanyCompanyID");
+                    b.HasIndex("CompanyID");
 
-                    b.ToTable("PickUpLocation");
+                    b.ToTable("PickUpLocations");
                 });
 
             modelBuilder.Entity("VectoVia.Models.Cars.Model.Car", b =>
@@ -162,7 +162,7 @@ namespace vectovia.Migrations.CarsDb
                     b.HasOne("VectoVia_LabCourse.Models.Cars.Model.Marka", "Marka")
                         .WithMany("Cars")
                         .HasForeignKey("MarkaID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("KompaniaRent");
@@ -174,9 +174,8 @@ namespace vectovia.Migrations.CarsDb
                 {
                     b.HasOne("VectoVia.Models.KompaniaRents.Model.KompaniaRent", "RentCompany")
                         .WithMany("PickUpLocations")
-                        .HasForeignKey("RentCompanyCompanyID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CompanyID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("RentCompany");
                 });

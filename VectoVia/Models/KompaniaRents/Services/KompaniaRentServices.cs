@@ -1,21 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using vectovia.Models.PickUpLocations.Model;
 using VectoVia.Data;
-using VectoVia.Models.KompaniaRents;
 using VectoVia.Models.KompaniaRents.Model;
+using VectoVia.Models.Cars.Model;
 using VectoVia.Views;
 
 namespace VectoVia.Models.KompaniaRents.Services
 {
     public class KompaniaRentServices
     {
+        private readonly KompaniaRentDbContext _context;
 
-        private KompaniaRentDbContext _context;
         public KompaniaRentServices(KompaniaRentDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
-
 
         public void AddKompaniaRent(KompaniaRentVM kompaniaRentVM)
         {
@@ -26,12 +25,14 @@ namespace VectoVia.Models.KompaniaRents.Services
                 ContactInfo = kompaniaRentVM.ContactInfo,
                 Sigurimi = kompaniaRentVM.Sigurimi,
                 CompanyLogoUrl = kompaniaRentVM.CompanyLogoUrl,
-                PickUpLocations = new List<PickUpLocation>() // Initialize the collection
+                PickUpLocations = new List<PickUpLocation>(),
+                Cars = new List<Car>() 
             };
 
             _context.KompaniaRents.Add(kompaniaRent);
             _context.SaveChanges();
 
+            // Add PickUpLocations
             var pickUpLocations = _context.PickUpLocations
                 .Where(pl => kompaniaRentVM.PickUpLocationIDs.Contains(pl.PickUpLocationID))
                 .ToList();
@@ -41,55 +42,94 @@ namespace VectoVia.Models.KompaniaRents.Services
                 kompaniaRent.PickUpLocations.Add(pickUpLocation);
             }
 
+            // Add Cars
+            var cars = _context.Cars
+                .Where(c => kompaniaRentVM.CarIDs.Contains(c.Tabelat))
+                .ToList();
+
+            foreach (var car in cars)
+            {
+                kompaniaRent.Cars.Add(car);
+            }
+
             _context.SaveChanges();
         }
 
-        public List<Model.KompaniaRent> GetKompaniteRent()
+        public List<KompaniaRent> GetKompaniteRent()
         {
-            var allKompaniaRent = _context.KompaniaRents.ToList();
-            return allKompaniaRent;
-        }
-        public KompaniaRent GetKompaniteRentByID(int KompaniaRentID)
-        {
-            return _context.KompaniaRents.FirstOrDefault(n => n.CompanyID == KompaniaRentID);
+            return _context.KompaniaRents.ToList();
         }
 
-        public KompaniaRent UpdateKompaniaRentByID(int KompaniaRentID, KompaniaRentVM kompaniaRentVM)
+        public KompaniaRent GetKompaniteRentByID(int kompaniaRentID)
         {
-            var _kompaniaRent = _context.KompaniaRents
-                .Include(kr => kr.PickUpLocations) // Include the PickUpLocations in the query
-                .FirstOrDefault(n => n.CompanyID == KompaniaRentID);
+            return _context.KompaniaRents
+                .Include(kr => kr.Cars) 
+                .FirstOrDefault(n => n.CompanyID == kompaniaRentID);
+        }
 
-            if (_kompaniaRent != null)
+        public KompaniaRent UpdateKompaniaRentByID(int kompaniaRentID, KompaniaRentVM kompaniaRentVM)
+        {
+            var kompaniaRent = _context.KompaniaRents
+                .Include(kr => kr.PickUpLocations)
+                .Include(kr => kr.Cars)
+                .FirstOrDefault(n => n.CompanyID == kompaniaRentID);
+
+            if (kompaniaRent != null)
             {
-                _kompaniaRent.Kompania = kompaniaRentVM.Kompania;
-                _kompaniaRent.Qyteti = kompaniaRentVM.Qyteti;
-                _kompaniaRent.ContactInfo = kompaniaRentVM.ContactInfo;
-                _kompaniaRent.Sigurimi = kompaniaRentVM.Sigurimi;
-                _kompaniaRent.CompanyLogoUrl = kompaniaRentVM.CompanyLogoUrl;
+                kompaniaRent.Kompania = kompaniaRentVM.Kompania;
+                kompaniaRent.Qyteti = kompaniaRentVM.Qyteti;
+                kompaniaRent.ContactInfo = kompaniaRentVM.ContactInfo;
+                kompaniaRent.Sigurimi = kompaniaRentVM.Sigurimi;
+                kompaniaRent.CompanyLogoUrl = kompaniaRentVM.CompanyLogoUrl;
 
-                // Update PickUpLocations
-                var existingLocations = _kompaniaRent.PickUpLocations.ToList();
+               
+                var existingLocations = kompaniaRent.PickUpLocations.ToList();
                 var newLocationIDs = kompaniaRentVM.PickUpLocationIDs ?? new List<int>();
 
-                // Remove locations that are no longer selected
+                
                 foreach (var existingLocation in existingLocations)
                 {
                     if (!newLocationIDs.Contains(existingLocation.PickUpLocationID))
                     {
-                        _kompaniaRent.PickUpLocations.Remove(existingLocation);
+                        kompaniaRent.PickUpLocations.Remove(existingLocation);
                     }
                 }
 
-                // Add new locations that are selected
+                
                 foreach (var newLocationID in newLocationIDs)
                 {
-                    if (!_kompaniaRent.PickUpLocations.Any(pl => pl.PickUpLocationID == newLocationID))
+                    if (!kompaniaRent.PickUpLocations.Any(pl => pl.PickUpLocationID == newLocationID))
                     {
                         var newLocation = _context.PickUpLocations.FirstOrDefault(pl => pl.PickUpLocationID == newLocationID);
                         if (newLocation != null)
                         {
-                            _kompaniaRent.PickUpLocations.Add(newLocation);
+                            kompaniaRent.PickUpLocations.Add(newLocation);
+                        }
+                    }
+                }
+
+               
+                var existingCars = kompaniaRent.Cars.ToList();
+                var newCarIDs = kompaniaRentVM.CarIDs ?? new List<int>();
+
+               
+                foreach (var existingCar in existingCars)
+                {
+                    if (!newCarIDs.Contains(existingCar.Tabelat))
+                    {
+                        kompaniaRent.Cars.Remove(existingCar);
+                    }
+                }
+
+                
+                foreach (var newCarID in newCarIDs)
+                {
+                    if (!kompaniaRent.Cars.Any(c => c.Tabelat == newCarID))
+                    {
+                        var newCar = _context.Cars.FirstOrDefault(c => c.Tabelat == newCarID);
+                        if (newCar != null)
+                        {
+                            kompaniaRent.Cars.Add(newCar);
                         }
                     }
                 }
@@ -97,13 +137,15 @@ namespace VectoVia.Models.KompaniaRents.Services
                 _context.SaveChanges();
             }
 
-            return _kompaniaRent;
+            return kompaniaRent;
         }
 
-
-        public KompaniaRent DeleteKompaniRentByID(int companyID)
+        public KompaniaRent DeleteKompaniaRentByID(int companyID)
         {
-            var kompaniaRent = _context.KompaniaRents.FirstOrDefault(n => n.CompanyID == companyID);
+            var kompaniaRent = _context.KompaniaRents
+                .Include(kr => kr.Cars) 
+                .FirstOrDefault(n => n.CompanyID == companyID);
+
             if (kompaniaRent != null)
             {
                 _context.KompaniaRents.Remove(kompaniaRent);
@@ -117,9 +159,24 @@ namespace VectoVia.Models.KompaniaRents.Services
         {
             return _context.KompaniaRents
                 .Include(k => k.PickUpLocations)
+                .Include(k => k.Cars) 
                 .ToList();
         }
 
+       
+        public List<Car> GetAllCars()
+        {
+            return _context.Cars.ToList();
+        }
 
+
+        public List<Car> GetAllCarsByCompanyID(int companyID)
+        {
+            var company = _context.KompaniaRents
+                .Include(kr => kr.Cars)
+                .FirstOrDefault(kr => kr.CompanyID == companyID);
+
+            return company?.Cars.ToList();
+        }
     }
 }

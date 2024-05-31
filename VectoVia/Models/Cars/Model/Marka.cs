@@ -8,7 +8,7 @@ namespace VectoVia_LabCourse.Models.Cars.Model
 
         public string EmriMarkes { get; set; }
 
-        public ICollection <Car> CarDBO { get; set; }
+        public ICollection <Car> Cars { get; set; }
     }
 
 }
