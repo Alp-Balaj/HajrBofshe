@@ -11,8 +11,8 @@ namespace vectovia.Models.Cars
 
         }
 
-        public DbSet<Car> CarDBO { get; set; }
-        public DbSet<Marka> Markat { get; set; }
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<Marka> Marka { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,7 +20,7 @@ namespace vectovia.Models.Cars
 
             modelBuilder.Entity<Car>()
                 .HasOne(c => c.Marka)
-                .WithMany(m => m.CarDBO)
+                .WithMany(m => m.Cars)
                 .HasForeignKey(c => c.MarkaID)
                 .OnDelete(DeleteBehavior.Restrict);
         }

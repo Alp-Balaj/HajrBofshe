@@ -22,6 +22,48 @@ namespace vectovia.Migrations.KompaniaRentDb
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("VectoVia.Models.Cars.Model.Car", b =>
+                {
+                    b.Property<int>("Tabelat")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Tabelat"));
+
+                    b.Property<string>("CarUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CompanyID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Karburanti")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MarkaID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Modeli")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Transmisioni")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VitiProdhimit")
+                        .HasColumnType("int");
+
+                    b.HasKey("Tabelat");
+
+                    b.HasIndex("CompanyID");
+
+                    b.HasIndex("MarkaID");
+
+                    b.ToTable("Cars");
+                });
+
             modelBuilder.Entity("VectoVia.Models.KompaniaRents.Model.KompaniaRent", b =>
                 {
                     b.Property<int>("CompanyID")
@@ -53,6 +95,23 @@ namespace vectovia.Migrations.KompaniaRentDb
                     b.HasKey("CompanyID");
 
                     b.ToTable("KompaniaRents");
+                });
+
+            modelBuilder.Entity("VectoVia_LabCourse.Models.Cars.Model.Marka", b =>
+                {
+                    b.Property<int>("MarkaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MarkaId"));
+
+                    b.Property<string>("EmriMarkes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MarkaId");
+
+                    b.ToTable("Marka");
                 });
 
             modelBuilder.Entity("vectovia.Models.PickUpLocations.Model.PickUpLocation", b =>
@@ -89,6 +148,24 @@ namespace vectovia.Migrations.KompaniaRentDb
                     b.ToTable("PickUpLocations");
                 });
 
+            modelBuilder.Entity("VectoVia.Models.Cars.Model.Car", b =>
+                {
+                    b.HasOne("VectoVia.Models.KompaniaRents.Model.KompaniaRent", "KompaniaRent")
+                        .WithMany("Cars")
+                        .HasForeignKey("CompanyID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("VectoVia_LabCourse.Models.Cars.Model.Marka", "Marka")
+                        .WithMany("Cars")
+                        .HasForeignKey("MarkaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("KompaniaRent");
+
+                    b.Navigation("Marka");
+                });
+
             modelBuilder.Entity("vectovia.Models.PickUpLocations.Model.PickUpLocation", b =>
                 {
                     b.HasOne("VectoVia.Models.KompaniaRents.Model.KompaniaRent", "RentCompany")
@@ -101,7 +178,14 @@ namespace vectovia.Migrations.KompaniaRentDb
 
             modelBuilder.Entity("VectoVia.Models.KompaniaRents.Model.KompaniaRent", b =>
                 {
+                    b.Navigation("Cars");
+
                     b.Navigation("PickUpLocations");
+                });
+
+            modelBuilder.Entity("VectoVia_LabCourse.Models.Cars.Model.Marka", b =>
+                {
+                    b.Navigation("Cars");
                 });
 #pragma warning restore 612, 618
         }

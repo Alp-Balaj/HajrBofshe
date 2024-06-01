@@ -13,6 +13,8 @@
         public string Sigurimi { get; set; }
 
         public List<int> PickUpLocationIDs { get; set; }
+
+        public List<int> CarIDs { get; set; }
     }
 }
 
