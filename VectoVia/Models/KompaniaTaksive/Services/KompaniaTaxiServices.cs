@@ -24,6 +24,7 @@ namespace VectoVia.Models.KompaniaTaksive.Services
                 PrimaryColour = kompaniaTaxi.PrimaryColour,
                 SecondaryColour = kompaniaTaxi.SecondaryColour,
                 ContactInfo = kompaniaTaxi.ContactInfo,
+                NumriKontaktues = kompaniaTaxi.NumriKontaktues,
                 Sigurimi = kompaniaTaxi.Sigurimi,
                 QytetiId = kompaniaTaxi.QytetiId,
             };
@@ -50,6 +51,7 @@ namespace VectoVia.Models.KompaniaTaksive.Services
                 _kompaniaTaxi.PrimaryColour = kompaniaTaxi.PrimaryColour;
                 _kompaniaTaxi.SecondaryColour = kompaniaTaxi.SecondaryColour;
                 _kompaniaTaxi.ContactInfo = kompaniaTaxi.ContactInfo;
+                _kompaniaTaxi.NumriKontaktues = kompaniaTaxi.NumriKontaktues;
                 _kompaniaTaxi.Sigurimi = kompaniaTaxi.Sigurimi;
                 _kompaniaTaxi.QytetiId = kompaniaTaxi.QytetiId; 
 

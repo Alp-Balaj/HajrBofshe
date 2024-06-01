@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace vectovia.Migrations
 {
     [DbContext(typeof(KompaniaTaxiDbContext))]
-    [Migration("20240528235452_UpdatedKompTaxi")]
-    partial class UpdatedKompTaxi
+    [Migration("20240601162544_LatestKompTaxi")]
+    partial class LatestKompTaxi
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,6 +57,10 @@ namespace vectovia.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Kompania")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumriKontaktues")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

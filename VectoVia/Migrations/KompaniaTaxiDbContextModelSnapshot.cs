@@ -57,6 +57,10 @@ namespace vectovia.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NumriKontaktues")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PrimaryColour")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

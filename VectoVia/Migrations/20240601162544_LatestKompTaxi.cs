@@ -5,7 +5,7 @@
 namespace vectovia.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdatedKompTaxi : Migration
+    public partial class LatestKompTaxi : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,6 +34,7 @@ namespace vectovia.Migrations
                     PrimaryColour = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SecondaryColour = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumriKontaktues = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Sigurimi = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QytetiId = table.Column<int>(type: "int", nullable: false)
                 },

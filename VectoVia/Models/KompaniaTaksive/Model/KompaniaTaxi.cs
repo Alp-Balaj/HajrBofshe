@@ -19,6 +19,8 @@ namespace VectoVia.Models.KompaniaTaksive.Model
 
         public string ContactInfo { get; set; }
 
+        public string NumriKontaktues { get; set; }
+
         public string Sigurimi { get; set; }
 
         public int QytetiId { get; set; }
