@@ -21,7 +21,7 @@ namespace VectoVia.Models.KompaniaRents.Services
             var kompaniaRent = new KompaniaRent
             {
                 Kompania = kompaniaRentVM.Kompania,
-                Qyteti = kompaniaRentVM.Qyteti,
+                QytetiId = kompaniaRentVM.QytetiId,
                 ContactInfo = kompaniaRentVM.ContactInfo,
                 Sigurimi = kompaniaRentVM.Sigurimi,
                 CompanyLogoUrl = kompaniaRentVM.CompanyLogoUrl,
@@ -77,7 +77,7 @@ namespace VectoVia.Models.KompaniaRents.Services
             if (kompaniaRent != null)
             {
                 kompaniaRent.Kompania = kompaniaRentVM.Kompania;
-                kompaniaRent.Qyteti = kompaniaRentVM.Qyteti;
+                kompaniaRent.QytetiId = kompaniaRentVM.QytetiId;
                 kompaniaRent.ContactInfo = kompaniaRentVM.ContactInfo;
                 kompaniaRent.Sigurimi = kompaniaRentVM.Sigurimi;
                 kompaniaRent.CompanyLogoUrl = kompaniaRentVM.CompanyLogoUrl;

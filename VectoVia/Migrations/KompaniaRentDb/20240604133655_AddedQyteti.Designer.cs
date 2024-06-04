@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VectoVia.Data;
 
@@ -11,9 +12,11 @@ using VectoVia.Data;
 namespace vectovia.Migrations.KompaniaRentDb
 {
     [DbContext(typeof(KompaniaRentDbContext))]
-    partial class KompaniaRentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240604133655_AddedQyteti")]
+    partial class AddedQyteti
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

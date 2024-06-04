@@ -22,6 +22,10 @@ namespace VectoVia.Data
             modelBuilder.Entity<KompaniaRent>().HasMany(kr => kr.PickUpLocations).WithOne
                  (pl => pl.RentCompany).HasForeignKey(pl => pl.CompanyID).OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<KompaniaRent>()
+            .HasOne(k => k.City)
+            .WithMany(q => q.KompaniaRents)
+            .HasForeignKey(k => k.QytetiId);
 
             modelBuilder.Entity<KompaniaRent>()
                 .HasMany(kr => kr.Cars)
