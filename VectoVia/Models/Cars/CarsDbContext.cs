@@ -11,7 +11,7 @@ namespace vectovia.Models.Cars
 
         }
 
-        public DbSet<Car> Cars { get; set; }
+        public DbSet<Car> Car { get; set; }
         public DbSet<Marka> Marka { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

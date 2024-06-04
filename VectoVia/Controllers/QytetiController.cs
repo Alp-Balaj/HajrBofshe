@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using vectovia.Models.Qytet.Services;
 using VectoVia.Models.KompaniaTaksive.Model;
-using VectoVia.Models.KompaniaTaksive.Services;
 using VectoVia.Models.Users.Services;
 using VectoVia.Views;
 

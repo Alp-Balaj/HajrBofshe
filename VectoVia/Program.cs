@@ -17,6 +17,7 @@ using vectovia.Models.Cars.Services;
 
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json.Serialization;
+using vectovia.Models.Qytet.Services;
 
 
 
@@ -27,23 +28,27 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(
 
-    builder.Configuration.GetConnectionString("AlpLaptopString") //Ndrro emrin e stringut qitu per me connect to your database
+    builder.Configuration.GetConnectionString("test") //Ndrro emrin e stringut qitu per me connect to your database
 ));
 
 builder.Services.AddDbContext<CarsDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("AlpLaptopString")
+    builder.Configuration.GetConnectionString("test")
 ));
 
 builder.Services.AddDbContext<KompaniaTaxiDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("AlpLaptopString")
+    builder.Configuration.GetConnectionString("test")
+));
+
+builder.Services.AddDbContext<QytetiDbContext>(options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("test")
 ));
 
 builder.Services.AddDbContext<TaxiCarsDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("AlpLaptopString")
+    builder.Configuration.GetConnectionString("test")
 ));
 
 builder.Services.AddDbContext<KompaniaRentDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("AlpLaptopString")
+    builder.Configuration.GetConnectionString("test")
 ));
 
 

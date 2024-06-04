@@ -5,7 +5,7 @@
 namespace vectovia.Migrations.UsersDb
 {
     /// <inheritdoc />
-    public partial class UserAndRoleMigration : Migration
+    public partial class AddingUsers : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

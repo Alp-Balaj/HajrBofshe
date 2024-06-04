@@ -11,8 +11,8 @@ using VectoVia.Models.Users;
 namespace vectovia.Migrations.UsersDb
 {
     [DbContext(typeof(UsersDbContext))]
-    [Migration("20240524224324_UserAndRoleMigration")]
-    partial class UserAndRoleMigration
+    [Migration("20240604180600_Adding Users")]
+    partial class AddingUsers
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

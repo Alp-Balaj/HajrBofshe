@@ -23,23 +23,23 @@ namespace VectoVia.Models.Cars.Services
                 Transmisioni = Car.Transmisioni,
                 VitiProdhimit = Car.VitiProdhimit,
             };
-            _context.Cars.Add(_car);
+            _context.Car.Add(_car);
             _context.SaveChanges();
         }
 
         public List<Car> GetCars()
         {
-            var allCars = _context.Cars.ToList();
+            var allCars = _context.Car.ToList();
             return allCars;
         }
         public Car GetCarsByID(int CarID)
         {
-            return _context.Cars.FirstOrDefault(n => n.Tabelat == CarID);
+            return _context.Car.FirstOrDefault(n => n.Tabelat == CarID);
         }
 
         public Car UpdateCarByID(int CarID, CarVM Car)
         {
-            var _Car = _context.Cars.FirstOrDefault(n => n.Tabelat == CarID);
+            var _Car = _context.Car.FirstOrDefault(n => n.Tabelat == CarID);
             if (_Car != null)
             {
                 _Car.MarkaID = Car.MarkaID;
@@ -58,10 +58,10 @@ namespace VectoVia.Models.Cars.Services
 
         public void DeleteCarByID(int CarID)
         {
-            var _Car = _context.Cars.FirstOrDefault(n => n.Tabelat == CarID);
+            var _Car = _context.Car.FirstOrDefault(n => n.Tabelat == CarID);
             if (_Car != null)
             {
-                _context.Cars.Remove(_Car);
+                _context.Car.Remove(_Car);
                 _context.SaveChanges();
             }
         }

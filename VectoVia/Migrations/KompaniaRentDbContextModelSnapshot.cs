@@ -8,7 +8,7 @@ using VectoVia.Data;
 
 #nullable disable
 
-namespace vectovia.Migrations.KompaniaRentDb
+namespace vectovia.Migrations
 {
     [DbContext(typeof(KompaniaRentDbContext))]
     partial class KompaniaRentDbContextModelSnapshot : ModelSnapshot
@@ -78,7 +78,7 @@ namespace vectovia.Migrations.KompaniaRentDb
 
                     b.HasIndex("MarkaID");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Car");
                 });
 
             modelBuilder.Entity("VectoVia.Models.KompaniaRents.Model.KompaniaRent", b =>
