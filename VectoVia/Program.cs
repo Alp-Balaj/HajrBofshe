@@ -28,27 +28,27 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(
 
-    builder.Configuration.GetConnectionString("test") //Ndrro emrin e stringut qitu per me connect to your database
+    builder.Configuration.GetConnectionString("database") //Ndrro emrin e stringut qitu per me connect to your database
 ));
 
 builder.Services.AddDbContext<CarsDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("test")
+    builder.Configuration.GetConnectionString("database")
 ));
 
 builder.Services.AddDbContext<KompaniaTaxiDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("test")
+    builder.Configuration.GetConnectionString("database")
 ));
 
 builder.Services.AddDbContext<QytetiDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("test")
+    builder.Configuration.GetConnectionString("database")
 ));
 
 builder.Services.AddDbContext<TaxiCarsDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("test")
+    builder.Configuration.GetConnectionString("database")
 ));
 
 builder.Services.AddDbContext<KompaniaRentDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("test")
+    builder.Configuration.GetConnectionString("database")
 ));
 
 
