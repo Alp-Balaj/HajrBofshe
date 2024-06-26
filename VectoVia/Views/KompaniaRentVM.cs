@@ -7,7 +7,7 @@
         public string Kompania { get; set; }
 
         public string CompanyLogoUrl { get; set; }
-        public string Qyteti { get; set; }
+        public int QytetiId { get; set; }
         public string ContactInfo { get; set; }
 
         public string Sigurimi { get; set; }

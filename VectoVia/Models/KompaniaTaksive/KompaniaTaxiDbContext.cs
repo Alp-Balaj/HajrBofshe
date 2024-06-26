@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VectoVia.Models.KompaniaTaksive.Model;
-using VectoVia.Migrations;
+
 
 public class KompaniaTaxiDbContext : DbContext
 {
@@ -9,10 +9,7 @@ public class KompaniaTaxiDbContext : DbContext
     }
 
 
-    public DbSet<KompaniaTaxi> KompaniaTaksive { get; set; }
-
-  
-    public DbSet<Qyteti> Qytetet { get; set; }
+    public DbSet<KompaniaTaxi> KompaniaTaxi { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         // Configure your entity relationships here if needed

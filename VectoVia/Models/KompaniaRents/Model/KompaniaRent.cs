@@ -15,7 +15,10 @@ namespace VectoVia.Models.KompaniaRents.Model
 
         public string CompanyLogoUrl { get; set; }
 
-        public string Qyteti { get; set; }
+        public int QytetiId { get; set; }
+
+        [ForeignKey("QytetiId")]
+        public Qyteti City { get; set; } // Navigation property
 
         public string ContactInfo { get; set; }
 

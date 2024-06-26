@@ -4,24 +4,29 @@ using VectoVia.Data;
 using VectoVia.Models.KompaniaRents.Model;
 using VectoVia.Models.Cars.Model;
 using VectoVia.Views;
+using vectovia.Models.Cars;
 
 namespace VectoVia.Models.KompaniaRents.Services
 {
     public class KompaniaRentServices
     {
         private readonly KompaniaRentDbContext _context;
+        private readonly CarsDbContext _carContext;
 
-        public KompaniaRentServices(KompaniaRentDbContext context)
+        public KompaniaRentServices(KompaniaRentDbContext context, CarsDbContext carContext)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _carContext = carContext ?? throw new ArgumentNullException(nameof(carContext));
         }
+
+
 
         public void AddKompaniaRent(KompaniaRentVM kompaniaRentVM)
         {
             var kompaniaRent = new KompaniaRent
             {
                 Kompania = kompaniaRentVM.Kompania,
-                Qyteti = kompaniaRentVM.Qyteti,
+                QytetiId = kompaniaRentVM.QytetiId,
                 ContactInfo = kompaniaRentVM.ContactInfo,
                 Sigurimi = kompaniaRentVM.Sigurimi,
                 CompanyLogoUrl = kompaniaRentVM.CompanyLogoUrl,
@@ -43,7 +48,7 @@ namespace VectoVia.Models.KompaniaRents.Services
             }
 
             // Add Cars
-            var cars = _context.Cars
+            var cars = _carContext.Car
                 .Where(c => kompaniaRentVM.CarIDs.Contains(c.Tabelat))
                 .ToList();
 
@@ -77,7 +82,7 @@ namespace VectoVia.Models.KompaniaRents.Services
             if (kompaniaRent != null)
             {
                 kompaniaRent.Kompania = kompaniaRentVM.Kompania;
-                kompaniaRent.Qyteti = kompaniaRentVM.Qyteti;
+                kompaniaRent.QytetiId = kompaniaRentVM.QytetiId;
                 kompaniaRent.ContactInfo = kompaniaRentVM.ContactInfo;
                 kompaniaRent.Sigurimi = kompaniaRentVM.Sigurimi;
                 kompaniaRent.CompanyLogoUrl = kompaniaRentVM.CompanyLogoUrl;
@@ -126,7 +131,7 @@ namespace VectoVia.Models.KompaniaRents.Services
                 {
                     if (!kompaniaRent.Cars.Any(c => c.Tabelat == newCarID))
                     {
-                        var newCar = _context.Cars.FirstOrDefault(c => c.Tabelat == newCarID);
+                        var newCar = _carContext.Car.FirstOrDefault(c => c.Tabelat == newCarID);
                         if (newCar != null)
                         {
                             kompaniaRent.Cars.Add(newCar);
@@ -154,23 +159,24 @@ namespace VectoVia.Models.KompaniaRents.Services
             }
             return null;
         }
-
+        
         public List<KompaniaRent> GetKompaniteRentWithPickUpLocations()
         {
             return _context.KompaniaRents
-                .Include(k => k.PickUpLocations)
-                .Include(k => k.Cars) 
+                .Include(kr => kr.PickUpLocations)
+                .Include(kr => kr.Cars)
                 .ToList();
         }
 
-       
+
+
         public List<Car> GetAllCars()
         {
-            return _context.Cars.ToList();
+            return _carContext.Car.ToList();
         }
 
 
-        public List<Car> GetAllCarsByCompanyID(int companyID)
+        public List<Car>? GetAllCarsByCompanyID(int companyID)
         {
             var company = _context.KompaniaRents
                 .Include(kr => kr.Cars)

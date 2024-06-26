@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VectoVia.Data;
 
 #nullable disable
 
-namespace vectovia.Migrations.KompaniaRentDb
+namespace vectovia.Migrations
 {
     [DbContext(typeof(KompaniaRentDbContext))]
-    [Migration("20240530151042_migrimiLorik")]
-    partial class migrimiLorik
+    partial class KompaniaRentDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,6 +21,23 @@ namespace vectovia.Migrations.KompaniaRentDb
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Qyteti", b =>
+                {
+                    b.Property<int>("QytetiId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QytetiId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("QytetiId");
+
+                    b.ToTable("Qyteti");
+                });
 
             modelBuilder.Entity("VectoVia.Models.Cars.Model.Car", b =>
                 {
@@ -37,7 +51,7 @@ namespace vectovia.Migrations.KompaniaRentDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CompanyID")
+                    b.Property<int?>("CompanyID")
                         .HasColumnType("int");
 
                     b.Property<string>("Karburanti")
@@ -64,7 +78,7 @@ namespace vectovia.Migrations.KompaniaRentDb
 
                     b.HasIndex("MarkaID");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Car");
                 });
 
             modelBuilder.Entity("VectoVia.Models.KompaniaRents.Model.KompaniaRent", b =>
@@ -87,7 +101,52 @@ namespace vectovia.Migrations.KompaniaRentDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Qyteti")
+                    b.Property<int>("QytetiId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Sigurimi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CompanyID");
+
+                    b.HasIndex("QytetiId");
+
+                    b.ToTable("KompaniaRents");
+                });
+
+            modelBuilder.Entity("VectoVia.Models.KompaniaTaksive.Model.KompaniaTaxi", b =>
+                {
+                    b.Property<int>("CompanyID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CompanyID"));
+
+                    b.Property<string>("ContactInfo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Kompania")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumriKontaktues")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PrimaryColour")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QytetiId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SecondaryColour")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -97,7 +156,9 @@ namespace vectovia.Migrations.KompaniaRentDb
 
                     b.HasKey("CompanyID");
 
-                    b.ToTable("KompaniaRents");
+                    b.HasIndex("QytetiId");
+
+                    b.ToTable("KompaniaTaxi");
                 });
 
             modelBuilder.Entity("VectoVia_LabCourse.Models.Cars.Model.Marka", b =>
@@ -156,8 +217,7 @@ namespace vectovia.Migrations.KompaniaRentDb
                     b.HasOne("VectoVia.Models.KompaniaRents.Model.KompaniaRent", "KompaniaRent")
                         .WithMany("Cars")
                         .HasForeignKey("CompanyID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("VectoVia_LabCourse.Models.Cars.Model.Marka", "Marka")
                         .WithMany("Cars")
@@ -170,6 +230,28 @@ namespace vectovia.Migrations.KompaniaRentDb
                     b.Navigation("Marka");
                 });
 
+            modelBuilder.Entity("VectoVia.Models.KompaniaRents.Model.KompaniaRent", b =>
+                {
+                    b.HasOne("Qyteti", "City")
+                        .WithMany("KompaniaRents")
+                        .HasForeignKey("QytetiId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+                });
+
+            modelBuilder.Entity("VectoVia.Models.KompaniaTaksive.Model.KompaniaTaxi", b =>
+                {
+                    b.HasOne("Qyteti", "City")
+                        .WithMany("KompaniaTaxis")
+                        .HasForeignKey("QytetiId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+                });
+
             modelBuilder.Entity("vectovia.Models.PickUpLocations.Model.PickUpLocation", b =>
                 {
                     b.HasOne("VectoVia.Models.KompaniaRents.Model.KompaniaRent", "RentCompany")
@@ -178,6 +260,13 @@ namespace vectovia.Migrations.KompaniaRentDb
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("RentCompany");
+                });
+
+            modelBuilder.Entity("Qyteti", b =>
+                {
+                    b.Navigation("KompaniaRents");
+
+                    b.Navigation("KompaniaTaxis");
                 });
 
             modelBuilder.Entity("VectoVia.Models.KompaniaRents.Model.KompaniaRent", b =>
